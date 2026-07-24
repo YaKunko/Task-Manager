@@ -20,3 +20,4 @@ dist/
 # Session scratch (local working docs, not part of the app)
 .superpowers/
 docs/superpowers/
+.playwright-mcp/
