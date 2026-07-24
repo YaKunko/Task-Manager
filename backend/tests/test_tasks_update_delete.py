@@ -61,3 +61,19 @@ async def test_delete_task(client):
 async def test_delete_missing_task_returns_404(client):
     response = await client.delete("/api/v1/tasks/999")
     assert response.status_code == 404
+
+
+async def test_patch_explicit_null_title_rejected(client):
+    created = await create_task(client)
+    response = await client.patch(
+        f"/api/v1/tasks/{created['id']}", json={"title": None}
+    )
+    assert response.status_code == 422
+
+
+async def test_patch_explicit_null_status_rejected(client):
+    created = await create_task(client)
+    response = await client.patch(
+        f"/api/v1/tasks/{created['id']}", json={"status": None}
+    )
+    assert response.status_code == 422

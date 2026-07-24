@@ -16,13 +16,13 @@ Full-stack task management app: FastAPI + PostgreSQL backend, Vue 3 frontend.
 
 ## Tech Stack
 
-| Layer    | Technology                                              |
-|----------|---------------------------------------------------------|
-| Backend  | Python 3.12, FastAPI, SQLAlchemy 2.0 (async), Alembic   |
-| Database | PostgreSQL 16                                           |
-| Frontend | Vue 3, Vite, Pinia, custom CSS                          |
-| Infra    | Docker Compose, nginx                                   |
-| Tests    | pytest, httpx, aiosqlite                                |
+| Layer    | Technology                                                         |
+|----------|--------------------------------------------------------------------|
+| Backend  | Python 3.12, FastAPI, SQLAlchemy 2.0 (async), Pydantic v2, Alembic |
+| Database | PostgreSQL 16                                                      |
+| Frontend | Vue 3, Vite, Pinia, custom CSS                                     |
+| Infra    | Docker Compose, nginx                                              |
+| Tests    | pytest, httpx, aiosqlite                                           |
 
 ## Quick Start (Docker)
 
@@ -53,6 +53,8 @@ docker compose down -v       # remove database data too
 
 Copy `.env.example` to `.env` to override defaults (Postgres credentials,
 `DATABASE_URL`). The stack works out of the box without a `.env` file.
+For local development outside Docker, place the `.env` file in `backend/`
+(or export the variables) — the backend reads it from its working directory.
 
 ## API Overview
 

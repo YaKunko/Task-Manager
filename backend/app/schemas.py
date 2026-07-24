@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from app.models import TaskPriority, TaskStatus
 
@@ -19,6 +19,13 @@ class TaskUpdate(BaseModel):
     status: TaskStatus | None = None
     priority: TaskPriority | None = None
     deadline: datetime | None = None
+
+    @field_validator("title", "status", "priority")
+    @classmethod
+    def reject_explicit_null(cls, value):
+        if value is None:
+            raise ValueError("must not be null")
+        return value
 
 
 class TaskRead(BaseModel):
