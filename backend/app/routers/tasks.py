@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import crud
 from app.database import get_session
 from app.models import Task, TaskStatus
-from app.schemas import TaskCreate, TaskListResponse, TaskRead
+from app.schemas import TaskCreate, TaskListResponse, TaskRead, TaskUpdate
 
 router = APIRouter(prefix="/api/v1/tasks", tags=["tasks"])
 
@@ -57,3 +57,20 @@ async def list_tasks(
 @router.get("/{task_id}", response_model=TaskRead)
 async def get_task(task: Annotated[Task, Depends(get_task_or_404)]) -> TaskRead:
     return task
+
+
+@router.patch("/{task_id}", response_model=TaskRead)
+async def update_task(
+    data: TaskUpdate,
+    task: Annotated[Task, Depends(get_task_or_404)],
+    session: SessionDep,
+) -> TaskRead:
+    return await crud.update_task(session, task, data)
+
+
+@router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_task(
+    task: Annotated[Task, Depends(get_task_or_404)],
+    session: SessionDep,
+) -> None:
+    await crud.delete_task(session, task)
