@@ -5,6 +5,7 @@ import TaskCard from './components/TaskCard.vue'
 import ToastHost from './components/ToastHost.vue'
 import FilterBar from './components/FilterBar.vue'
 import PaginationBar from './components/PaginationBar.vue'
+import TaskFormModal from './components/TaskFormModal.vue'
 
 const store = useTasksStore()
 const showForm = ref(false)
@@ -58,6 +59,13 @@ onMounted(() => store.fetchTasks())
     </div>
 
     <PaginationBar />
+
+    <TaskFormModal
+      v-if="showForm"
+      :task="editingTask"
+      :key="editingTask?.id ?? 'new'"
+      @close="showForm = false"
+    />
 
     <ToastHost />
   </div>
