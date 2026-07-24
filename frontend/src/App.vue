@@ -3,6 +3,8 @@ import { onMounted, ref } from 'vue'
 import { useTasksStore } from './stores/tasks'
 import TaskCard from './components/TaskCard.vue'
 import ToastHost from './components/ToastHost.vue'
+import FilterBar from './components/FilterBar.vue'
+import PaginationBar from './components/PaginationBar.vue'
 
 const store = useTasksStore()
 const showForm = ref(false)
@@ -31,6 +33,8 @@ onMounted(() => store.fetchTasks())
       <button class="btn btn-primary" @click="openCreateForm">+ New Task</button>
     </header>
 
+    <FilterBar />
+
     <div v-if="store.loading" class="task-grid">
       <div v-for="n in 6" :key="n" class="skeleton-card" />
     </div>
@@ -52,6 +56,8 @@ onMounted(() => store.fetchTasks())
         @edit="openEditForm"
       />
     </div>
+
+    <PaginationBar />
 
     <ToastHost />
   </div>
